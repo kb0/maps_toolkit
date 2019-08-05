@@ -7,7 +7,7 @@ In your dart/flutter project add the dependency:
 ```
  dependencies:
    ...
-   sqflite: ^1.0.1
+   maps_toolkit: ^1.0.1+1
 ```
 
 A simple usage example:
