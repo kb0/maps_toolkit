@@ -1,6 +1,6 @@
 name: maps_toolkit
-description: Maps toolkit - different geo-measurements utils - area of polygon, distance between point, heading and offset between points (port of SphericalUtil from android-maps-utils).
-version: 1.0.0
+description: Maps toolkit - different geo-measurements utils - area of polygon, distance between point, heading and offset between points (port of SphericalUtil from Java-library `android-maps-utils`).
+version: 1.0.1
 homepage: https://github.com/kb0/maps_toolkit/
 author: Kirill Bychkov <bychkov.kirill.0@gmail.com>
 
