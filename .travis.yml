@@ -12,7 +12,7 @@ jobs:
     - stage: coverage
       script:
         - pub global activate dart_coveralls
-        - dart_coveralls report test/all_test.dart
+        - dart_coveralls report --debug --exclude-test-files --token=COVERALLS_REPO_TOKEN test/all_test.dart
 stages:
   - analyze
   - unit_test
