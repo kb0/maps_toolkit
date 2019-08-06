@@ -6,13 +6,16 @@ class MathUtil {
   static num toDegrees(num rad) => rad * (180.0 / pi);
 
   /// Restrict x to the range [low, high].
-  static num clamp(num x, num low, num high) => x < low ? low : (x > high ? high : x);
+  static num clamp(num x, num low, num high) =>
+      x < low ? low : (x > high ? high : x);
 
-  /// Wraps the given value into the inclusive-exclusive interval between min and max.
+  /// Wraps the given value into the inclusive-exclusive interval between min
+  /// and max.
   /// @param n   The value to wrap.
   /// @param min The minimum.
   /// @param max The maximum.
-  static num wrap(num n, num min, num max) => (n >= min && n < max) ? n : (mod(n - min, max - min) + min);
+  static num wrap(num n, num min, num max) =>
+      (n >= min && n < max) ? n : (mod(n - min, max - min) + min);
 
   /// Returns the non-negative remainder of x / m.
   /// @param x The operand.
@@ -48,6 +51,8 @@ class MathUtil {
     return 2 * (a + b - 2 * (a * y + b * x));
   }
 
-  /// Returns hav() of distance from (lat1, lng1) to (lat2, lng2) on the unit sphere.
-  static num havDistance(num lat1, num lat2, num dLng) => hav(lat1 - lat2) + hav(dLng) * cos(lat1) * cos(lat2);
+  /// Returns hav() of distance from (lat1, lng1) to (lat2, lng2) on the unit
+  /// sphere.
+  static num havDistance(num lat1, num lat2, num dLng) =>
+      hav(lat1 - lat2) + hav(dLng) * cos(lat1) * cos(lat2);
 }

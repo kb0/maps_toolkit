@@ -6,7 +6,7 @@ jobs:
     - stage: analyze
       script: dartanalyzer --fatal-warnings .
     - stage: analyze
-      script: dartfmt --dry-run --set-exit-if-changed --line-length 120 .
+      script: dartfmt --dry-run --set-exit-if-changed .
     - stage: unit_test
       script: pub run test test/all_test.dart --platform vm
     - stage: coverage
