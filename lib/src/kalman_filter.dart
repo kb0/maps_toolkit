@@ -6,21 +6,21 @@ import 'spherical_util.dart';
 
 class KalmanFilter {
   static Location apply(Location location, Location lastLocation, double constant) {
-    double accuracy = max(location.accuracy, 1.0);
-    double variance = accuracy * accuracy;
+    final accuracy = max(location.accuracy, 1);
+    var variance = accuracy * accuracy;
 
     if (lastLocation != null) {
-      var timestampInc = location.time.microsecondsSinceEpoch - lastLocation.time.microsecondsSinceEpoch;
+      final timestampInc = location.time.microsecondsSinceEpoch - lastLocation.time.microsecondsSinceEpoch;
 
       if (timestampInc > 0) {
         // We can tune the velocity and particularly the coefficient at the end
-        var speed =
+        final speed =
             SphericalUtil.computeDistanceBetween(location.latlng, lastLocation.latlng) / timestampInc * constant;
 
         variance += timestampInc * speed * speed / 1000;
       }
 
-      var k = variance / (variance + accuracy * accuracy);
+      final k = variance / (variance + accuracy * accuracy);
 
       // variance = (1 - k) * result.variance;
       return Location(
@@ -29,5 +29,7 @@ class KalmanFilter {
           accuracy: location.accuracy,
           time: location.time);
     }
+
+    return location;
   }
 }

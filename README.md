@@ -1,5 +1,17 @@
 #maps_toolkit
-A library for area, distance, heading measurements.
+======
+
+[![Pub Package](https://img.shields.io/pub/v/maps_toolkit.svg)](https://pub.dartlang.org/packages/maps_toolkit)
+[![Build Status](https://travis-ci.org/kb0/maps_toolkit.svg?branch=master)](https://travis-ci.org/kb0/maps_toolkit)
+[![Coverage Status](https://coveralls.io/repos/github/kb0/maps_toolkit/badge.svg?branch=master)](https://coveralls.io/github/kb0/maps_toolkit?branch=master)
+
+[![GitHub Issues](https://img.shields.io/github/issues/kb0/maps_toolkit.svg?branch=master)](https://github.com/kb0/maps_toolkit/issues)
+[![GitHub Forks](https://img.shields.io/github/forks/kb0/maps_toolkit.svg?branch=master)](https://github.com/kb0/maps_toolkit/network)
+[![GitHub Stars](https://img.shields.io/github/stars/kb0/maps_toolkit.svg?branch=master)](https://github.com/kb0/maps_toolkit/stargazers)
+[![GitHub License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/kb0/maps_toolkit/master/LICENSE)
+
+
+A library for area, distance, heading measurements (spherical_util.dart if port from `android-maps-utils`).
 
 ## Getting Started
 

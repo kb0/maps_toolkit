@@ -8,21 +8,21 @@ void expectLatLngApproxEquals(LatLng actual, LatLng expected) {
   expect(actual.latitude, closeTo(expected.latitude, 1e-6));
 
   if (expected.longitude == -180.0) {
-    expected = LatLng(expected.latitude, 180.0);
+    expected = LatLng(expected.latitude, 180);
   }
 
-  num cosLat = cos(MathUtil.toRadians(actual.latitude));
+  final cosLat = cos(MathUtil.toRadians(actual.latitude));
   expect(cosLat * actual.longitude, closeTo(cosLat * expected.longitude, 1e-6));
 }
 
 void main() {
   // The vertices of an octahedron, for testing
-  final LatLng up = LatLng(90, 0);
-  final LatLng down = LatLng(-90, 0);
-  final LatLng front = LatLng(0, 0);
-  final LatLng right = LatLng(0, 90);
-  final LatLng back = LatLng(0, 180);
-  final LatLng left = LatLng(0, -90);
+  final up = LatLng(90, 0);
+  final down = LatLng(-90, 0);
+  final front = LatLng(0, 0);
+  final right = LatLng(0, 90);
+  final back = LatLng(0, 180);
+  final left = LatLng(0, -90);
 
   setUp(() {});
 
@@ -128,7 +128,7 @@ void main() {
   });
 
   test('testComputeOffsetAndBackToOrigin', () {
-    LatLng start = LatLng(40, 40);
+    var start = LatLng(40, 40);
     num distance = 1e5;
     num heading = 15;
     LatLng end;
@@ -232,9 +232,9 @@ void main() {
         closeTo(SphericalUtil.earthRadius * SphericalUtil.earthRadius * pi / 2, 1e-2));
 
     // computeArea returns area of zero on small polys
-    num area = computeTriangleArea(
+    final area = computeTriangleArea(
         LatLng(0, 0), LatLng(0, MathUtil.toDegrees(1E-6).toDouble()), LatLng(MathUtil.toDegrees(1E-6).toDouble(), 0));
-    num expectedArea = SphericalUtil.earthRadius * SphericalUtil.earthRadius * 1E-12 / 2;
+    final expectedArea = SphericalUtil.earthRadius * SphericalUtil.earthRadius * 1E-12 / 2;
 
     expect(area, closeTo(expectedArea, 1e-8));
   });
@@ -266,8 +266,8 @@ void main() {
   });
 
   test('testComputeSignedArea', () {
-    List<LatLng> path = [right, up, front, down, right];
-    List<LatLng> pathReversed = [right, down, front, up, right];
+    final path = [right, up, front, down, right];
+    final pathReversed = [right, down, front, up, right];
 
     expect(-SphericalUtil.computeSignedArea(path), SphericalUtil.computeSignedArea(pathReversed));
   });

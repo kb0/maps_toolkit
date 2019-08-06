@@ -4,7 +4,5 @@ class LatLng {
 
   LatLng(this.latitude, this.longitude);
 
-  factory LatLng.fromMap(Map<String, double> dataMap) {
-    return LatLng(dataMap['latitude'], dataMap['longitude']);
-  }
+  factory LatLng.fromMap(Map<String, double> dataMap) => LatLng(dataMap['latitude'], dataMap['longitude']);
 }
