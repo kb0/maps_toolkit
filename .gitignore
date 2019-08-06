@@ -30,3 +30,4 @@
 build/
 
 pubspec.lock
+/.coveralls.yml
