@@ -5,7 +5,6 @@ class MathUtil {
 
   static num toDegrees(num rad) => rad * (180.0 / pi);
 
-
   /// Restrict x to the range [low, high].
   static num clamp(num x, num low, num high) {
     return x < low ? low : (x > high ? high : x);

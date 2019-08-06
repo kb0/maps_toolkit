@@ -40,7 +40,7 @@ class SphericalUtil {
     num sinLat = cosDistance * sinFromLat + sinDistance * cosFromLat * cos(heading);
     num dLng = atan2(sinDistance * cosFromLat * sin(heading), cosDistance - sinFromLat * sinLat);
 
-    return LatLng(MathUtil.toDegrees(asin(sinLat)), MathUtil.toDegrees(fromLng + dLng));
+    return LatLng(MathUtil.toDegrees(asin(sinLat)).toDouble(), MathUtil.toDegrees(fromLng + dLng).toDouble());
   }
 
   /// Returns the location of origin when provided with a LatLng destination,
@@ -82,7 +82,7 @@ class SphericalUtil {
     }
     num fromLngRadians =
         MathUtil.toRadians(to.longitude) - atan2(n3, n1 * cos(fromLatRadians) - n2 * sin(fromLatRadians));
-    return LatLng(MathUtil.toDegrees(fromLatRadians), MathUtil.toDegrees(fromLngRadians));
+    return LatLng(MathUtil.toDegrees(fromLatRadians).toDouble(), MathUtil.toDegrees(fromLngRadians).toDouble());
   }
 
   /// Returns the LatLng which lies the given fraction of the way between the
@@ -119,7 +119,7 @@ class SphericalUtil {
     num lat = atan2(z, sqrt(x * x + y * y));
     num lng = atan2(y, x);
 
-    return LatLng(MathUtil.toDegrees(lat), MathUtil.toDegrees(lng));
+    return LatLng(MathUtil.toDegrees(lat).toDouble(), MathUtil.toDegrees(lng).toDouble());
   }
 
   /// Returns distance on the unit sphere; the arguments are in radians.
