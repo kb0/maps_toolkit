@@ -1,3 +1,7 @@
+## 1.0.1+3
+
+- fix issues with deps (move pedantic into dev_dependencies) 
+
 ## 1.0.1+2
 
 - fix lint issues 
