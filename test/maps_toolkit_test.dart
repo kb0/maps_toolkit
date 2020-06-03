@@ -325,7 +325,7 @@ void main() {
         LatLng(0, 0),
         LatLng(0, MathUtil.toDegrees(1E-6).toDouble()),
         LatLng(MathUtil.toDegrees(1E-6).toDouble(), 0));
-    final expectedArea =
+    const expectedArea =
         SphericalUtil.earthRadius * SphericalUtil.earthRadius * 1E-12 / 2;
 
     expect(area, closeTo(expectedArea, 1e-8));

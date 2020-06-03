@@ -19,7 +19,7 @@ In your dart/flutter project add the dependency:
 ```
  dependencies:
    ...
-   maps_toolkit: ^1.0.1+3
+   maps_toolkit: ^1.1.0
 ```
 
 A simple usage example:
@@ -45,6 +45,17 @@ main() {
 * `SphericalUtil.computeOffsetOrigin` - calculate the location of origin when provided with a point destination, meters travelled and original heading.
 * `SphericalUtil.computeSignedArea` - calculate the signed area of a closed path on Earth.
 * `SphericalUtil.interpolate` - calculate the point which lies the given fraction of the way between the origin and the destination.
+
+* `PolygonUtil.containsLocation` - computes whether the given point lies inside the specified polygon.
+* `PolygonUtil.isLocationOnEdge` - computes whether the given point lies on or near the edge of a polygon, within a specified tolerance in meters.
+* `PolygonUtil.isLocationOnPath` - computes whether the given point lies on or near a polyline, within a specified tolerance in meters.
+* `PolygonUtil.locationIndexOnPath` - computes whether (and where) a given point lies on or near a polyline, within a specified tolerance.
+* `PolygonUtil.locationIndexOnEdgeOrPath` - computes whether (and where) a given point lies on or near a polyline,  within a specified tolerance.
+* `PolygonUtil.simplify` - simplifies the given poly (polyline or polygon) using the Douglas-Peucker decimation algorithm.
+* `PolygonUtil.isClosedPolygon` - returns true if the provided list of points is a closed polygon.
+* `PolygonUtil.distanceToLine` - computes the distance on the sphere between the point p and the line segment start to end.
+* `PolygonUtil.decode` - decodes an encoded path string into a sequence of LatLngs.
+* `PolygonUtil.encode` - encodes a sequence of LatLngs into an encoded path string.
 
 ## Features and bugs
 
