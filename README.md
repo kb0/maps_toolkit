@@ -35,6 +35,21 @@ main() {
 }
 ```
 
+Usage with Google Maps package (specify a prefix for an import):
+
+```dart
+import 'package:maps_toolkit/maps_toolkit.dart' as mp;
+import 'package:google_maps/google_maps.dart';
+import 'package:test/test.dart';
+
+void main() {
+  final pointFromToolkit = mp.LatLng(90, 0);
+  final pointFromGoogleMap = LatLng(90, 0);
+
+  mp.SphericalUtil.computeAngleBetween(pointFromToolkit, pointFromToolkit);
+}
+``` 
+
 ## List of functions
 
 * `SphericalUtil.computeArea` - calculate the area of a closed path on Earth.
