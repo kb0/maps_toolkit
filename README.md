@@ -19,7 +19,7 @@ In your dart/flutter project add the dependency:
 ```
  dependencies:
    ...
-   maps_toolkit: ^1.1.0
+   maps_toolkit: ^1.1.0+1
 ```
 
 A simple usage example:

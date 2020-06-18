@@ -1,3 +1,7 @@
+## 1.1.0+1
+
+- fix PolygonUtils import 
+
 ## 1.1.0
 
 - add PolygonUtils (port from android-maps-utils) 
