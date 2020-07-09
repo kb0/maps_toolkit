@@ -346,7 +346,7 @@ class PolygonUtil {
     int idx;
     var maxIdx = 0;
     final stack = Queue<List<int>>();
-    final dists = List<num>(3);
+    final dists = List<num>.filled(n, 0);
     dists[0] = 1;
     dists[n - 1] = 1;
     num maxDist;
