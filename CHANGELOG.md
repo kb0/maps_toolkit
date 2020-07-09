@@ -1,3 +1,7 @@
+## 1.1.0+2
+
+- fix PolygonUtils.simplify
+
 ## 1.1.0+1
 
 - fix PolygonUtils import 
