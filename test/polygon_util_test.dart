@@ -53,6 +53,17 @@ List<LatLng> makeList([List<num> coords]) {
   return list;
 }
 
+void containsCase(List<LatLng> poly, List<LatLng> yes, List<LatLng> no) {
+  for (final point in yes) {
+    expect(PolygonUtil.containsLocation(point, poly, true), equals(true));
+    expect(PolygonUtil.containsLocation(point, poly, false), equals(true));
+  }
+  for (final point in no) {
+    expect(PolygonUtil.containsLocation(point, poly, true), equals(false));
+    expect(PolygonUtil.containsLocation(point, poly, false), equals(false));
+  }
+}
+
 void onEdgeCaseWithGeodesic(
     bool geodesic, List<LatLng> poly, List<LatLng> yes, List<LatLng> no) {
   for (final point in yes) {
@@ -319,5 +330,35 @@ void main() {
     locationIndexCase(makeList([0, 80, 0, 90, 0, 100]), LatLng(0, 95), 1);
     locationIndexCase(makeList([0, 80, 0, 90, 0, 100]), LatLng(0, 100), 1);
     locationIndexCase(makeList([0, 80, 0, 90, 0, 100]), LatLng(0, 110), -1);
+  });
+
+  test('contains', () {
+    // Empty.
+    containsCase(makeList([]), makeList([]), makeList([0, 0]));
+
+    // One point.
+    containsCase(makeList([1, 2]), makeList([1, 2]), makeList([0, 0]));
+
+    // Two points.
+    containsCase(makeList([1, 2, 3, 5]), makeList([1, 2, 3, 5]),
+        makeList([0, 0, 40, 4]));
+
+    // Some arbitrary triangle.
+    containsCase(
+        makeList([0.0, 0.0, 10.0, 12.0, 20.0, 5.0]),
+        makeList([10.0, 12.0, 10, 11, 19, 5]),
+        makeList([0, 1, 11, 12, 30, 5, 0, -180, 0, 90]));
+
+    // Around North Pole.
+    containsCase(makeList([89, 0, 89, 120, 89, -120]),
+        makeList([90, 0, 90, 180, 90, -90]), makeList([-90, 0, 0, 0]));
+
+    // Around South Pole.
+    containsCase(makeList([-89, 0, -89, 120, -89, -120]),
+        makeList([90, 0, 90, 180, 90, -90, 0, 0]), makeList([-90, 0, -90, 90]));
+
+    // Over/under segment on meridian and equator.
+    containsCase(makeList([5, 10, 10, 10, 0, 20, 0, -10]),
+        makeList([2.5, 10, 1, 0]), makeList([15, 10, 0, -15, 0, 25, -1, 0]));
   });
 }
