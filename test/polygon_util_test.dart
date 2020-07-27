@@ -481,7 +481,6 @@ void main() {
         PolygonUtil.containsLocation(
             LatLng(25.394104, 55.454473), polygon, true),
         equals(false));
-
   });
 
   test('contains issue-4-2', () {
