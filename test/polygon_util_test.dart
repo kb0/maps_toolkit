@@ -474,13 +474,14 @@ void main() {
 
     expect(
         PolygonUtil.containsLocation(
-            LatLng(25.394104, 55.454473), polygon, true),
+            LatLng(25.392898, 55.455251), polygon, true),
         equals(false));
 
     expect(
         PolygonUtil.containsLocation(
             LatLng(25.394104, 55.454473), polygon, true),
         equals(false));
+
   });
 
   test('contains issue-4-2', () {
@@ -592,13 +593,13 @@ void main() {
 
     expect(
         PolygonUtil.containsLocation(
-            LatLng(55.454473, 25.394104), polygon, true),
-        equals(false));
+            LatLng(25.392898, 55.455251), polygon, true),
+        equals(true));
 
     expect(
         PolygonUtil.containsLocation(
-            LatLng(25.394104, 55.454473), polygon, true),
-        equals(true));
+            LatLng(55.454473, 25.394104), polygon, true),
+        equals(false));
 
     expect(
         PolygonUtil.containsLocation(
