@@ -54,7 +54,7 @@ class SphericalUtil {
   /// @param to       The destination LatLng.
   /// @param distance The distance travelled, in meters.
   /// @param heading  The heading in degrees clockwise from north.
-  static LatLng computeOffsetOrigin(LatLng to, num distance, num heading) {
+  static LatLng? computeOffsetOrigin(LatLng to, num distance, num heading) {
     heading = MathUtil.toRadians(heading);
     distance /= earthRadius;
     // http://lists.maptools.org/pipermail/proj/2008-October/003939.html

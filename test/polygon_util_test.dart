@@ -43,7 +43,7 @@ void assertLineLength(List<LatLng> line, List<LatLng> simplifiedLine) {
   }
 }
 
-List<LatLng> makeList([List<num> coords]) {
+List<LatLng> makeList(List<num> coords) {
   final size = coords.length ~/ 2;
 
   final list = <LatLng>[];

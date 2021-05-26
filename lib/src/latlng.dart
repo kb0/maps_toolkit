@@ -5,7 +5,7 @@ class LatLng {
   LatLng(this.latitude, this.longitude);
 
   factory LatLng.fromMap(Map<String, double> dataMap) =>
-      LatLng(dataMap['latitude'], dataMap['longitude']);
+      LatLng(dataMap['latitude']!, dataMap['longitude']!);
 
   @override
   // ignore: type_annotate_public_apis

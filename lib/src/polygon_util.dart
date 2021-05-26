@@ -211,7 +211,8 @@ class PolygonUtil {
       final maxAcceptable = lat3 + tolerance;
       var y1 = MathUtil.mercator(lat1);
       final y3 = MathUtil.mercator(lat3);
-      final xTry = List<num>(3);
+      final xTry = List<num?>.generate(3, (index) => null);
+
       for (final point2 in poly) {
         final lat2 = MathUtil.toRadians(point2.latitude);
         final y2 = MathUtil.mercator(lat2);
@@ -231,12 +232,12 @@ class PolygonUtil {
             final len2 = x2 * x2 + dy * dy;
             final t = len2 <= 0
                 ? 0
-                : MathUtil.clamp((x3 * x2 + (y3 - y1) * dy) / len2, 0, 1);
+                : MathUtil.clamp((x3! * x2 + (y3 - y1) * dy) / len2, 0, 1);
             final xClosest = t * x2;
             final yClosest = y1 + t * dy;
             final latClosest = MathUtil.inverseMercator(yClosest);
             final havDist =
-                MathUtil.havDistance(lat3, latClosest, x3 - xClosest);
+                MathUtil.havDistance(lat3, latClosest, x3! - xClosest);
             if (havDist < havTolerance) {
               return max(0, idx - 1);
             }
@@ -329,7 +330,7 @@ class PolygonUtil {
     }
 
     final closedPolygon = isClosedPolygon(poly);
-    LatLng lastPoint;
+    late final LatLng lastPoint;
 
     // Check if the provided poly is a closed polygon
     if (closedPolygon) {

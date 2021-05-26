@@ -6,7 +6,7 @@ import 'spherical_util.dart';
 
 class KalmanFilter {
   static Location apply(
-      Location location, Location lastLocation, double constant) {
+      Location location, Location? lastLocation, double constant) {
     final accuracy = max(location.accuracy, 1);
     var variance = accuracy * accuracy;
 

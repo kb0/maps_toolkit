@@ -145,24 +145,24 @@ void main() {
 
   test('testComputeOffsetOrigin', () {
     expectLatLngApproxEquals(
-        front, SphericalUtil.computeOffsetOrigin(front, 0, 0));
+        front, SphericalUtil.computeOffsetOrigin(front, 0, 0)!);
 
     expectLatLngApproxEquals(
         front,
         SphericalUtil.computeOffsetOrigin(
-            LatLng(0, 45), pi * SphericalUtil.earthRadius / 4, 90));
+            LatLng(0, 45), pi * SphericalUtil.earthRadius / 4, 90)!);
     expectLatLngApproxEquals(
         front,
         SphericalUtil.computeOffsetOrigin(
-            LatLng(0, -45), pi * SphericalUtil.earthRadius / 4, -90));
+            LatLng(0, -45), pi * SphericalUtil.earthRadius / 4, -90)!);
     expectLatLngApproxEquals(
         front,
         SphericalUtil.computeOffsetOrigin(
-            LatLng(45, 0), pi * SphericalUtil.earthRadius / 4, 0));
+            LatLng(45, 0), pi * SphericalUtil.earthRadius / 4, 0)!);
     expectLatLngApproxEquals(
         front,
         SphericalUtil.computeOffsetOrigin(
-            LatLng(-45, 0), pi * SphericalUtil.earthRadius / 4, 180));
+            LatLng(-45, 0), pi * SphericalUtil.earthRadius / 4, 180)!);
 
     // Situations with no solution, should return null.
 
@@ -188,22 +188,22 @@ void main() {
     // the same location.
     end = SphericalUtil.computeOffset(start, distance, heading);
     expectLatLngApproxEquals(
-        start, SphericalUtil.computeOffsetOrigin(end, distance, heading));
+        start, SphericalUtil.computeOffsetOrigin(end, distance, heading)!);
 
     heading = -37;
     end = SphericalUtil.computeOffset(start, distance, heading);
     expectLatLngApproxEquals(
-        start, SphericalUtil.computeOffsetOrigin(end, distance, heading));
+        start, SphericalUtil.computeOffsetOrigin(end, distance, heading)!);
 
     distance = 3.8e+7;
     end = SphericalUtil.computeOffset(start, distance, heading);
     expectLatLngApproxEquals(
-        start, SphericalUtil.computeOffsetOrigin(end, distance, heading));
+        start, SphericalUtil.computeOffsetOrigin(end, distance, heading)!);
 
     start = LatLng(-21, -73);
     end = SphericalUtil.computeOffset(start, distance, heading);
     expectLatLngApproxEquals(
-        start, SphericalUtil.computeOffsetOrigin(end, distance, heading));
+        start, SphericalUtil.computeOffsetOrigin(end, distance, heading)!);
 
     // computeOffsetOrigin with multiple solutions, all we care about is that
     // going from there yields the requested result.
@@ -211,7 +211,7 @@ void main() {
     // First, for this particular situation the latitude is completely
     // arbitrary.
     start = SphericalUtil.computeOffsetOrigin(
-        LatLng(0, 90), pi * SphericalUtil.earthRadius / 2, 90);
+        LatLng(0, 90), pi * SphericalUtil.earthRadius / 2, 90)!;
     expectLatLngApproxEquals(
         LatLng(0, 90),
         SphericalUtil.computeOffset(
@@ -220,7 +220,7 @@ void main() {
     // Second, for this particular situation the longitude is completely
     // arbitrary.
     start = SphericalUtil.computeOffsetOrigin(
-        LatLng(90, 0), pi * SphericalUtil.earthRadius / 4, 0);
+        LatLng(90, 0), pi * SphericalUtil.earthRadius / 4, 0)!;
     expectLatLngApproxEquals(
         LatLng(90, 0),
         SphericalUtil.computeOffset(
