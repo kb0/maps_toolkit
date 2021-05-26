@@ -1,3 +1,7 @@
+## 2.0.0
+
+* BREAKING CHANGE: This version requires Dart SDK 2.12.0 or later (null safety).
+
 ## 1.1.0+2
 
 - fix PolygonUtils.simplify
