@@ -135,10 +135,10 @@ void main() {
   });
 
   test('simplify polygon', () {
-    const POLYGON_LINE =
+    const polygonLine =
         'elfjD~a}uNOnFN~Em@fJv@tEMhGDjDe@hG^nF??@lA?n@IvAC`Ay@A{@DwCA{CF_EC{CEi@PBTFDJBJ?V?n@?D@?A@?@?F?F?LAf@?n@@`@@T@~@FpA?fA?p@?r@?vAH`@OR@^ETFJCLD?JA^?J?P?fAC`B@d@?b@A\\@`@Ad@@\\?`@?f@?V?H?DD@DDBBDBD?D?B?B@B@@@B@B@B@D?D?JAF@H@FCLADBDBDCFAN?b@Af@@x@@';
 
-    final line = PolygonUtil.decode(POLYGON_LINE);
+    final line = PolygonUtil.decode(polygonLine);
     expect(line.length, equals(95));
 
     final data = [
@@ -191,10 +191,10 @@ void main() {
   });
 
   test('simplify polygon - oval', () {
-    const POLYGON_OVAL =
+    const polygonOval =
         '}wgjDxw_vNuAd@}AN{A]w@_Au@kAUaA?{@Ke@@_@C]D[FULWFOLSNMTOVOXO\\I\\CX?VJXJTDTNXTVVLVJ`@FXA\\AVLZBTATBZ@ZAT?\\?VFT@XGZ';
 
-    final oval = PolygonUtil.decode(POLYGON_OVAL);
+    final oval = PolygonUtil.decode(polygonOval);
     expect(PolygonUtil.isClosedPolygon(oval), equals(false));
 
     final simplifiedOval10 = PolygonUtil.simplify(oval, 10);

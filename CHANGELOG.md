@@ -1,3 +1,8 @@
+## 2.0.1
+
+* Update Dart DSK version up to 2.17.0
+* Add LatLng.toString, Location.toString
+
 ## 2.0.0
 
 * BREAKING CHANGE: This version requires Dart SDK 2.12.0 or later (null safety).

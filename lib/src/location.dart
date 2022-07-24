@@ -12,6 +12,9 @@ class Location {
     required this.time,
   });
 
+  @override
+  String toString() => 'LatLng: $latlng, Accuracy: $accuracy, Time: $time';
+
 //  factory LatLng.fromMap(Map<String, double> dataMap) {
 //    return LatLng(dataMap['latitude'], dataMap['longitude']);
 //  }

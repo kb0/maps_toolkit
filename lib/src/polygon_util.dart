@@ -112,7 +112,7 @@ class PolygonUtil {
     return (nIntersect & 1) != 0;
   }
 
-  static const num DEFAULT_TOLERANCE = 0.1; // meters.
+  static const num defaultTolerance = 0.1; // meters.
 
   /// Computes whether the given point lies on or near the edge of a polygon,
   /// within a specified tolerance in meters. The polygon edge is composed of
@@ -121,7 +121,7 @@ class PolygonUtil {
   /// between the first point and the last point is included.
   static bool isLocationOnEdge(
           LatLng point, List<LatLng> polygon, bool geodesic,
-          {num tolerance = DEFAULT_TOLERANCE}) =>
+          {num tolerance = defaultTolerance}) =>
       _isLocationOnEdgeOrPath(point, polygon, true, geodesic, tolerance);
 
   /// Computes whether the given point lies on or near a polyline, within a
@@ -131,7 +131,7 @@ class PolygonUtil {
   /// and the last point is not included.
   static bool isLocationOnPath(
           LatLng point, List<LatLng> polyline, bool geodesic,
-          {num tolerance = DEFAULT_TOLERANCE}) =>
+          {num tolerance = defaultTolerance}) =>
       _isLocationOnEdgeOrPath(point, polyline, false, geodesic, tolerance);
 
   static bool _isLocationOnEdgeOrPath(LatLng point, List<LatLng> poly,
@@ -157,7 +157,7 @@ class PolygonUtil {
   /// ...,
   /// poly.size()-2 if between poly[poly.size() - 2] and poly[poly.size() - 1]
   static int locationIndexOnPath(LatLng point, List<LatLng> poly, bool geodesic,
-          {num tolerance = DEFAULT_TOLERANCE}) =>
+          {num tolerance = defaultTolerance}) =>
       locationIndexOnEdgeOrPath(point, poly, false, geodesic, tolerance);
 
   /// Computes whether (and where) a given point lies on or near a polyline,
@@ -336,12 +336,12 @@ class PolygonUtil {
     if (closedPolygon) {
       // Add a small offset to the last point for Douglas-Peucker on polygons
       // (see #201)
-      const OFFSET = 0.00000000001;
+      const offset = 0.00000000001;
       lastPoint = poly.last;
       // LatLng.latitude and .longitude are immutable, so replace the last point
       poly.removeLast();
       poly.add(
-          LatLng(lastPoint.latitude + OFFSET, lastPoint.longitude + OFFSET));
+          LatLng(lastPoint.latitude + offset, lastPoint.longitude + offset));
     }
 
     int idx;

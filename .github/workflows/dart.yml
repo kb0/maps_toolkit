@@ -24,7 +24,7 @@ jobs:
         run: dart analyze --fatal-warnings --fatal-infos --verbose .
 
       - name: Activate code coverage
-        run: pub global activate dart_coveralls
+        run: dart pub global activate dart_coveralls
 
       - name: Analyze code coverage
         run: dart_coveralls report --debug --exclude-test-files --token=$COVERALLS_REPO_TOKEN test/all_test.dart
@@ -35,7 +35,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        sdk: [stable, 2.12.0, 2.13.1]
+        sdk: [stable, 2.17.0]
     steps:
       - uses: actions/checkout@v2
       - uses: dart-lang/setup-dart@v1.0
@@ -59,4 +59,4 @@ jobs:
         run: dart pub get
 
       - name: Publish project
-        run: pub publish --dry-run
+        run: dart pub publish --dry-run

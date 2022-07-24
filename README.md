@@ -19,7 +19,7 @@ In your dart/flutter project add the dependency:
 ```
  dependencies:
    ...
-   maps_toolkit: ^2.0.0
+   maps_toolkit: ^2.0.1
 ```
 
 A simple usage example:
@@ -32,6 +32,13 @@ main() {
     LatLng(51.5073509, -0.1277583),
     LatLng(48.856614, 2.3522219)
   );
+
+  final p1 = LatLng(45.153474463955796, 39.33852195739747);
+  final p2 = LatLng(45.153474463955796, 39.33972358703614);
+  final p3 = LatLng(45.15252112936569, 39.33972358703614);
+  final p4 = LatLng(45.1525022138355, 39.3385460972786);
+
+  val areaInSquareMeters = SphericalUtil.computeArea([p1, p2, p3, p4, p1]);
 }
 ```
 
