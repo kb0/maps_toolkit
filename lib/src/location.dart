@@ -1,4 +1,6 @@
-import 'latlng.dart';
+import 'package:latlong2/latlong.dart';
+
+// import 'latlng_.dart';
 
 class Location {
   final LatLng latlng;
