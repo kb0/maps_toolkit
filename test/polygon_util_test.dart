@@ -1,3 +1,4 @@
+import 'package:latlong2/latlong.dart';
 import 'package:maps_toolkit/maps_toolkit.dart';
 import 'package:test/test.dart';
 
@@ -111,8 +112,13 @@ void main() {
         PolygonUtil.containsLocation(LatLng(1, 1), [], false), equals(false));
   });
 
+  // test('containsLocation without point', () {
+  //   expect(PolygonUtil.containsLocation(LatLng(99, 99), polygon, true),
+  //       equals(false));
+  // });
+
   test('containsLocation without point', () {
-    expect(PolygonUtil.containsLocation(LatLng(99, 99), polygon, true),
+    expect(PolygonUtil.containsLocation(LatLng(90, 90), polygon, true),
         equals(false));
   });
 
@@ -240,7 +246,8 @@ void main() {
         makeList([-45, -180, -45, -small]),
         makeList([
           -45,
-          180 + small,
+          //180 + small,
+          180, // MAX: 180 degree
           -45,
           180 - small,
           -45 - small,

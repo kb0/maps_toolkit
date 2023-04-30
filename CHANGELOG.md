@@ -1,3 +1,7 @@
+## 3.0.0
+
+* BREAKING CHANGE: This version uses latlong2 for latitude and longitude calculation. The goal is to make it compatible with flutter_map
+
 ## 2.0.1
 
 * Update Dart DSK version up to 2.17.0

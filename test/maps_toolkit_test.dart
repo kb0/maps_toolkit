@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:latlong2/latlong.dart';
 import 'package:maps_toolkit/maps_toolkit.dart';
 import 'package:maps_toolkit/src/math_util.dart';
 import 'package:test/test.dart';
