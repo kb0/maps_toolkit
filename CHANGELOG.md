@@ -1,3 +1,8 @@
+## 3.0.0
+
+* Update Dart DSK version to 3.0.0+
+* Fix PolygonUtil.decode on JavaScript (https://github.com/Dammyololade/flutter_polyline_points/issues/40#issuecomment-751765055)
+
 ## 2.0.1
 
 * Update Dart DSK version up to 2.17.0
