@@ -23,12 +23,6 @@ jobs:
       - name: Analyze project source
         run: dart analyze --fatal-warnings --fatal-infos --verbose .
 
-      - name: Activate code coverage
-        run: dart pub global activate dart_coveralls
-
-      - name: Analyze code coverage
-        run: dart_coveralls report --debug --exclude-test-files --token=$COVERALLS_REPO_TOKEN test/all_test.dart
-
   test:
     runs-on: ${{ matrix.os }}
     strategy:
