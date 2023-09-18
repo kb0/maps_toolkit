@@ -440,7 +440,6 @@ class PolygonUtil {
     return SphericalUtil.computeDistanceBetween(p, su);
   }
 
-  /// Decodes an encoded path string into a sequence of LatLngs.
   static List<LatLng> decode(final String encodedPath) {
     final len = encodedPath.length;
 
@@ -451,28 +450,45 @@ class PolygonUtil {
     var lat = 0;
     var lng = 0;
 
+    final big0 = BigInt.from(0);
+    final big0x1f = BigInt.from(0x1f);
+    final big0x20 = BigInt.from(0x20);
+
     while (index < len) {
-      var result = 1;
       var shift = 0;
-      int b1;
+      BigInt b, result;
+      result = big0;
       do {
-        b1 = encodedPath.codeUnitAt(index++) - 63 - 1;
-        result += b1 << shift;
+        b = BigInt.from(encodedPath.codeUnitAt(index++) - 63);
+        result |= (b & big0x1f) << shift;
         shift += 5;
-      } while (b1 >= 0x1f);
-      lat += (result & 1) != 0 ? ~(result >> 1) : (result >> 1);
+      } while (b >= big0x20);
+      var rShifted = result >> 1;
+      int dLat;
+      if (result.isOdd) {
+        dLat = (~rShifted).toInt();
+      } else {
+        dLat = rShifted.toInt();
+      }
+      lat += dLat;
 
-      result = 1;
       shift = 0;
-      int b2;
+      result = big0;
       do {
-        b2 = encodedPath.codeUnitAt(index++) - 63 - 1;
-        result += b2 << shift;
+        b = BigInt.from(encodedPath.codeUnitAt(index++) - 63);
+        result |= (b & big0x1f) << shift;
         shift += 5;
-      } while (b2 >= 0x1f);
-      lng += (result & 1) != 0 ? ~(result >> 1) : (result >> 1);
+      } while (b >= big0x20);
+      rShifted = result >> 1;
+      int dlng;
+      if (result.isOdd) {
+        dlng = (~rShifted).toInt();
+      } else {
+        dlng = rShifted.toInt();
+      }
+      lng += dlng;
 
-      path.add(LatLng(lat * 1e-5, lng * 1e-5));
+      path.add(LatLng((lat / 1E5).toDouble(), (lng / 1E5).toDouble()));
     }
 
     return path;
