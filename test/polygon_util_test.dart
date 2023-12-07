@@ -94,11 +94,11 @@ void locationIndexCase(List<LatLng> poly, LatLng point, int idx) {
 void main() {
   // The vertices of an octahedron, for testing
   final polygon = [
-    LatLng(10, 10),
-    LatLng(10, 20),
-    LatLng(20, 20),
-    LatLng(20, 10),
-    LatLng(10, 10)
+    const LatLng(10, 10),
+    const LatLng(10, 20),
+    const LatLng(20, 20),
+    const LatLng(20, 10),
+    const LatLng(10, 10)
   ];
 
   const encodedPolyline =
@@ -107,20 +107,20 @@ void main() {
   setUp(() {});
 
   test('containsLocation for empty polygon', () {
-    expect(
-        PolygonUtil.containsLocation(LatLng(1, 1), [], false), equals(false));
+    expect(PolygonUtil.containsLocation(const LatLng(1, 1), [], false),
+        equals(false));
   });
 
   test('containsLocation without point', () {
-    expect(PolygonUtil.containsLocation(LatLng(99, 99), polygon, true),
+    expect(PolygonUtil.containsLocation(const LatLng(99, 99), polygon, true),
         equals(false));
   });
 
   test('containsLocation with point', () {
-    expect(PolygonUtil.containsLocation(LatLng(10, 10), polygon, true),
+    expect(PolygonUtil.containsLocation(const LatLng(10, 10), polygon, true),
         equals(true));
 
-    expect(PolygonUtil.containsLocation(LatLng(15, 15), polygon, true),
+    expect(PolygonUtil.containsLocation(const LatLng(15, 15), polygon, true),
         equals(true));
   });
 
@@ -163,12 +163,12 @@ void main() {
 
   test('simplify polygon - triangle', () {
     final triangle = <LatLng>[];
-    triangle.add(LatLng(28.06025, -82.41030));
-    triangle.add(LatLng(28.06129, -82.40945));
-    triangle.add(LatLng(28.06206, -82.40917));
-    triangle.add(LatLng(28.06125, -82.40850));
-    triangle.add(LatLng(28.06035, -82.40834));
-    triangle.add(LatLng(28.06038, -82.40924));
+    triangle.add(const LatLng(28.06025, -82.41030));
+    triangle.add(const LatLng(28.06129, -82.40945));
+    triangle.add(const LatLng(28.06206, -82.40917));
+    triangle.add(const LatLng(28.06125, -82.40850));
+    triangle.add(const LatLng(28.06035, -82.40834));
+    triangle.add(const LatLng(28.06038, -82.40924));
     expect(PolygonUtil.isClosedPolygon(triangle), equals(false));
 
     final simplifiedTriangle88 = PolygonUtil.simplify(triangle, 88);
@@ -218,7 +218,7 @@ void main() {
 
   test('on edge', () {
     // Empty
-    onEdgeCase([], [], [LatLng(0, 0)]);
+    onEdgeCase([], [], [const LatLng(0, 0)]);
 
     const small = 5e-7; // About 5cm on equator, half the default tolerance.
     const big = 2e-6; // About 10cm on equator, double the default tolerance.
@@ -312,24 +312,26 @@ void main() {
   });
 
   test('location index', () {
-    locationIndexCase(makeList([]), LatLng(0, 0), -1);
+    locationIndexCase(makeList([]), const LatLng(0, 0), -1);
 
     // One point.
-    locationIndexCase(makeList([1, 2]), LatLng(1, 2), 0);
-    locationIndexCase(makeList([1, 2]), LatLng(3, 5), -1);
+    locationIndexCase(makeList([1, 2]), const LatLng(1, 2), 0);
+    locationIndexCase(makeList([1, 2]), const LatLng(3, 5), -1);
 
     // Two points.
-    locationIndexCase(makeList([1, 2, 3, 5]), LatLng(1, 2), 0);
-    locationIndexCase(makeList([1, 2, 3, 5]), LatLng(3, 5), 0);
-    locationIndexCase(makeList([1, 2, 3, 5]), LatLng(4, 6), -1);
+    locationIndexCase(makeList([1, 2, 3, 5]), const LatLng(1, 2), 0);
+    locationIndexCase(makeList([1, 2, 3, 5]), const LatLng(3, 5), 0);
+    locationIndexCase(makeList([1, 2, 3, 5]), const LatLng(4, 6), -1);
 
     // Three points.
-    locationIndexCase(makeList([0, 80, 0, 90, 0, 100]), LatLng(0, 80), 0);
-    locationIndexCase(makeList([0, 80, 0, 90, 0, 100]), LatLng(0, 85), 0);
-    locationIndexCase(makeList([0, 80, 0, 90, 0, 100]), LatLng(0, 90), 0);
-    locationIndexCase(makeList([0, 80, 0, 90, 0, 100]), LatLng(0, 95), 1);
-    locationIndexCase(makeList([0, 80, 0, 90, 0, 100]), LatLng(0, 100), 1);
-    locationIndexCase(makeList([0, 80, 0, 90, 0, 100]), LatLng(0, 110), -1);
+    locationIndexCase(makeList([0, 80, 0, 90, 0, 100]), const LatLng(0, 80), 0);
+    locationIndexCase(makeList([0, 80, 0, 90, 0, 100]), const LatLng(0, 85), 0);
+    locationIndexCase(makeList([0, 80, 0, 90, 0, 100]), const LatLng(0, 90), 0);
+    locationIndexCase(makeList([0, 80, 0, 90, 0, 100]), const LatLng(0, 95), 1);
+    locationIndexCase(
+        makeList([0, 80, 0, 90, 0, 100]), const LatLng(0, 100), 1);
+    locationIndexCase(
+        makeList([0, 80, 0, 90, 0, 100]), const LatLng(0, 110), -1);
   });
 
   test('contains', () {
@@ -464,22 +466,22 @@ void main() {
 
     expect(
         PolygonUtil.containsLocation(
-            LatLng(55.455251, 25.392898), polygon, true),
+            const LatLng(55.455251, 25.392898), polygon, true),
         equals(true));
 
     expect(
         PolygonUtil.containsLocation(
-            LatLng(55.454473, 25.394104), polygon, true),
+            const LatLng(55.454473, 25.394104), polygon, true),
         equals(true));
 
     expect(
         PolygonUtil.containsLocation(
-            LatLng(25.392898, 55.455251), polygon, true),
+            const LatLng(25.392898, 55.455251), polygon, true),
         equals(false));
 
     expect(
         PolygonUtil.containsLocation(
-            LatLng(25.394104, 55.454473), polygon, true),
+            const LatLng(25.394104, 55.454473), polygon, true),
         equals(false));
   });
 
@@ -587,22 +589,22 @@ void main() {
 
     expect(
         PolygonUtil.containsLocation(
-            LatLng(55.455251, 25.392898), polygon, true),
+            const LatLng(55.455251, 25.392898), polygon, true),
         equals(false));
 
     expect(
         PolygonUtil.containsLocation(
-            LatLng(25.392898, 55.455251), polygon, true),
+            const LatLng(25.392898, 55.455251), polygon, true),
         equals(true));
 
     expect(
         PolygonUtil.containsLocation(
-            LatLng(55.454473, 25.394104), polygon, true),
+            const LatLng(55.454473, 25.394104), polygon, true),
         equals(false));
 
     expect(
         PolygonUtil.containsLocation(
-            LatLng(25.394104, 55.454473), polygon, true),
+            const LatLng(25.394104, 55.454473), polygon, true),
         equals(true));
   });
 }
