@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:maps_toolkit/maps_toolkit.dart';
-import 'package:maps_toolkit/src/math_util.dart';
 import 'package:test/test.dart';
 
 void expectLatLngApproxEquals(LatLng actual, LatLng expected) {
@@ -17,14 +16,16 @@ void expectLatLngApproxEquals(LatLng actual, LatLng expected) {
 
 void main() {
   // The vertices of an octahedron, for testing
-  final up = LatLng(90, 0);
-  final down = LatLng(-90, 0);
-  final front = LatLng(0, 0);
-  final right = LatLng(0, 90);
-  final back = LatLng(0, 180);
-  final left = LatLng(0, -90);
+  const up = LatLng(90, 0);
+  const down = LatLng(-90, 0);
+  const front = LatLng(0, 0);
+  const right = LatLng(0, 90);
+  const back = LatLng(0, 180);
+  const left = LatLng(0, -90);
 
-  setUp(() {});
+  setUp(() {
+    Earth.radius = Earth.meanRadius;
+  });
 
   test('testAngles', () {
     // Same vertex
@@ -41,22 +42,15 @@ void main() {
     expect(SphericalUtil.computeAngleBetween(up, back), closeTo(pi / 2, 1e-6));
     expect(SphericalUtil.computeAngleBetween(up, left), closeTo(pi / 2, 1e-6));
 
-    expect(
-        SphericalUtil.computeAngleBetween(down, front), closeTo(pi / 2, 1e-6));
-    expect(
-        SphericalUtil.computeAngleBetween(down, right), closeTo(pi / 2, 1e-6));
-    expect(
-        SphericalUtil.computeAngleBetween(down, back), closeTo(pi / 2, 1e-6));
-    expect(
-        SphericalUtil.computeAngleBetween(down, left), closeTo(pi / 2, 1e-6));
+    expect(SphericalUtil.computeAngleBetween(down, front), closeTo(pi / 2, 1e-6));
+    expect(SphericalUtil.computeAngleBetween(down, right), closeTo(pi / 2, 1e-6));
+    expect(SphericalUtil.computeAngleBetween(down, back), closeTo(pi / 2, 1e-6));
+    expect(SphericalUtil.computeAngleBetween(down, left), closeTo(pi / 2, 1e-6));
 
     expect(SphericalUtil.computeAngleBetween(back, up), closeTo(pi / 2, 1e-6));
-    expect(
-        SphericalUtil.computeAngleBetween(back, right), closeTo(pi / 2, 1e-6));
-    expect(
-        SphericalUtil.computeAngleBetween(back, down), closeTo(pi / 2, 1e-6));
-    expect(
-        SphericalUtil.computeAngleBetween(back, left), closeTo(pi / 2, 1e-6));
+    expect(SphericalUtil.computeAngleBetween(back, right), closeTo(pi / 2, 1e-6));
+    expect(SphericalUtil.computeAngleBetween(back, down), closeTo(pi / 2, 1e-6));
+    expect(SphericalUtil.computeAngleBetween(back, left), closeTo(pi / 2, 1e-6));
 
     // Opposite vertices
     expect(SphericalUtil.computeAngleBetween(up, down), closeTo(pi, 1e-6));
@@ -65,8 +59,7 @@ void main() {
   });
 
   test('testDistances', () {
-    expect(SphericalUtil.computeDistanceBetween(up, down),
-        closeTo(pi * SphericalUtil.earthRadius, 1e-6));
+    expect(SphericalUtil.computeDistanceBetween(up, down), closeTo(pi * Earth.radius, 1e-6));
   });
 
   test('testHeadings', () {
@@ -95,87 +88,40 @@ void main() {
   test('testComputeOffset', () {
 // From front
     expectLatLngApproxEquals(front, SphericalUtil.computeOffset(front, 0, 0));
-    expectLatLngApproxEquals(
-        up,
-        SphericalUtil.computeOffset(
-            front, pi * SphericalUtil.earthRadius / 2, 0));
-    expectLatLngApproxEquals(
-        down,
-        SphericalUtil.computeOffset(
-            front, pi * SphericalUtil.earthRadius / 2, 180));
-    expectLatLngApproxEquals(
-        left,
-        SphericalUtil.computeOffset(
-            front, pi * SphericalUtil.earthRadius / 2, -90));
-    expectLatLngApproxEquals(
-        right,
-        SphericalUtil.computeOffset(
-            front, pi * SphericalUtil.earthRadius / 2, 90));
-    expectLatLngApproxEquals(back,
-        SphericalUtil.computeOffset(front, pi * SphericalUtil.earthRadius, 0));
-    expectLatLngApproxEquals(back,
-        SphericalUtil.computeOffset(front, pi * SphericalUtil.earthRadius, 90));
+    expectLatLngApproxEquals(up, SphericalUtil.computeOffset(front, pi * Earth.radius / 2, 0));
+    expectLatLngApproxEquals(down, SphericalUtil.computeOffset(front, pi * Earth.radius / 2, 180));
+    expectLatLngApproxEquals(left, SphericalUtil.computeOffset(front, pi * Earth.radius / 2, -90));
+    expectLatLngApproxEquals(right, SphericalUtil.computeOffset(front, pi * Earth.radius / 2, 90));
+    expectLatLngApproxEquals(back, SphericalUtil.computeOffset(front, pi * Earth.radius, 0));
+    expectLatLngApproxEquals(back, SphericalUtil.computeOffset(front, pi * Earth.radius, 90));
 
     // From left
     expectLatLngApproxEquals(left, SphericalUtil.computeOffset(left, 0, 0));
-    expectLatLngApproxEquals(
-        up,
-        SphericalUtil.computeOffset(
-            left, pi * SphericalUtil.earthRadius / 2, 0));
-    expectLatLngApproxEquals(
-        down,
-        SphericalUtil.computeOffset(
-            left, pi * SphericalUtil.earthRadius / 2, 180));
-    expectLatLngApproxEquals(
-        front,
-        SphericalUtil.computeOffset(
-            left, pi * SphericalUtil.earthRadius / 2, 90));
-    expectLatLngApproxEquals(
-        back,
-        SphericalUtil.computeOffset(
-            left, pi * SphericalUtil.earthRadius / 2, -90));
-    expectLatLngApproxEquals(right,
-        SphericalUtil.computeOffset(left, pi * SphericalUtil.earthRadius, 0));
-    expectLatLngApproxEquals(right,
-        SphericalUtil.computeOffset(left, pi * SphericalUtil.earthRadius, 90));
+    expectLatLngApproxEquals(up, SphericalUtil.computeOffset(left, pi * Earth.radius / 2, 0));
+    expectLatLngApproxEquals(down, SphericalUtil.computeOffset(left, pi * Earth.radius / 2, 180));
+    expectLatLngApproxEquals(front, SphericalUtil.computeOffset(left, pi * Earth.radius / 2, 90));
+    expectLatLngApproxEquals(back, SphericalUtil.computeOffset(left, pi * Earth.radius / 2, -90));
+    expectLatLngApproxEquals(right, SphericalUtil.computeOffset(left, pi * Earth.radius, 0));
+    expectLatLngApproxEquals(right, SphericalUtil.computeOffset(left, pi * Earth.radius, 90));
 
     // NOTE(appleton): Heading is undefined at the poles, so we do not test
     // from up/down.
   });
 
   test('testComputeOffsetOrigin', () {
-    expectLatLngApproxEquals(
-        front, SphericalUtil.computeOffsetOrigin(front, 0, 0)!);
+    expectLatLngApproxEquals(front, SphericalUtil.computeOffsetOrigin(front, 0, 0)!);
 
-    expectLatLngApproxEquals(
-        front,
-        SphericalUtil.computeOffsetOrigin(
-            LatLng(0, 45), pi * SphericalUtil.earthRadius / 4, 90)!);
-    expectLatLngApproxEquals(
-        front,
-        SphericalUtil.computeOffsetOrigin(
-            LatLng(0, -45), pi * SphericalUtil.earthRadius / 4, -90)!);
-    expectLatLngApproxEquals(
-        front,
-        SphericalUtil.computeOffsetOrigin(
-            LatLng(45, 0), pi * SphericalUtil.earthRadius / 4, 0)!);
-    expectLatLngApproxEquals(
-        front,
-        SphericalUtil.computeOffsetOrigin(
-            LatLng(-45, 0), pi * SphericalUtil.earthRadius / 4, 180)!);
+    expectLatLngApproxEquals(front, SphericalUtil.computeOffsetOrigin(LatLng(0, 45), pi * Earth.radius / 4, 90)!);
+    expectLatLngApproxEquals(front, SphericalUtil.computeOffsetOrigin(LatLng(0, -45), pi * Earth.radius / 4, -90)!);
+    expectLatLngApproxEquals(front, SphericalUtil.computeOffsetOrigin(LatLng(45, 0), pi * Earth.radius / 4, 0)!);
+    expectLatLngApproxEquals(front, SphericalUtil.computeOffsetOrigin(LatLng(-45, 0), pi * Earth.radius / 4, 180)!);
 
     // Situations with no solution, should return null.
 
     // First 'over' the pole.
-    expect(
-        null,
-        SphericalUtil.computeOffsetOrigin(
-            LatLng(80, 0), pi * SphericalUtil.earthRadius / 4, 180));
+    expect(null, SphericalUtil.computeOffsetOrigin(LatLng(80, 0), pi * Earth.radius / 4, 180));
     // Second a distance that doesn't fit on the earth.
-    expect(
-        null,
-        SphericalUtil.computeOffsetOrigin(
-            LatLng(80, 0), pi * SphericalUtil.earthRadius / 4, 90));
+    expect(null, SphericalUtil.computeOffsetOrigin(LatLng(80, 0), pi * Earth.radius / 4, 90));
   });
 
   test('testComputeOffsetAndBackToOrigin', () {
@@ -187,89 +133,61 @@ void main() {
     // Some semi-random values to demonstrate going forward and backward yields
     // the same location.
     end = SphericalUtil.computeOffset(start, distance, heading);
-    expectLatLngApproxEquals(
-        start, SphericalUtil.computeOffsetOrigin(end, distance, heading)!);
+    expectLatLngApproxEquals(start, SphericalUtil.computeOffsetOrigin(end, distance, heading)!);
 
     heading = -37;
     end = SphericalUtil.computeOffset(start, distance, heading);
-    expectLatLngApproxEquals(
-        start, SphericalUtil.computeOffsetOrigin(end, distance, heading)!);
+    expectLatLngApproxEquals(start, SphericalUtil.computeOffsetOrigin(end, distance, heading)!);
 
     distance = 3.8e+7;
     end = SphericalUtil.computeOffset(start, distance, heading);
-    expectLatLngApproxEquals(
-        start, SphericalUtil.computeOffsetOrigin(end, distance, heading)!);
+    expectLatLngApproxEquals(start, SphericalUtil.computeOffsetOrigin(end, distance, heading)!);
 
     start = LatLng(-21, -73);
     end = SphericalUtil.computeOffset(start, distance, heading);
-    expectLatLngApproxEquals(
-        start, SphericalUtil.computeOffsetOrigin(end, distance, heading)!);
+    expectLatLngApproxEquals(start, SphericalUtil.computeOffsetOrigin(end, distance, heading)!);
 
     // computeOffsetOrigin with multiple solutions, all we care about is that
     // going from there yields the requested result.
     //
     // First, for this particular situation the latitude is completely
     // arbitrary.
-    start = SphericalUtil.computeOffsetOrigin(
-        LatLng(0, 90), pi * SphericalUtil.earthRadius / 2, 90)!;
-    expectLatLngApproxEquals(
-        LatLng(0, 90),
-        SphericalUtil.computeOffset(
-            start, pi * SphericalUtil.earthRadius / 2, 90));
+    start = SphericalUtil.computeOffsetOrigin(LatLng(0, 90), pi * Earth.radius / 2, 90)!;
+    expectLatLngApproxEquals(LatLng(0, 90), SphericalUtil.computeOffset(start, pi * Earth.radius / 2, 90));
 
     // Second, for this particular situation the longitude is completely
     // arbitrary.
-    start = SphericalUtil.computeOffsetOrigin(
-        LatLng(90, 0), pi * SphericalUtil.earthRadius / 4, 0)!;
-    expectLatLngApproxEquals(
-        LatLng(90, 0),
-        SphericalUtil.computeOffset(
-            start, pi * SphericalUtil.earthRadius / 4, 0));
+    start = SphericalUtil.computeOffsetOrigin(LatLng(90, 0), pi * Earth.radius / 4, 0)!;
+    expectLatLngApproxEquals(LatLng(90, 0), SphericalUtil.computeOffset(start, pi * Earth.radius / 4, 0));
   });
 
   test('testInterpolate', () {
 // Same point
     expectLatLngApproxEquals(up, SphericalUtil.interpolate(up, up, 1 / 2.0));
-    expectLatLngApproxEquals(
-        down, SphericalUtil.interpolate(down, down, 1 / 2.0));
-    expectLatLngApproxEquals(
-        left, SphericalUtil.interpolate(left, left, 1 / 2.0));
+    expectLatLngApproxEquals(down, SphericalUtil.interpolate(down, down, 1 / 2.0));
+    expectLatLngApproxEquals(left, SphericalUtil.interpolate(left, left, 1 / 2.0));
 
     // Between front and up
-    expectLatLngApproxEquals(
-        LatLng(1, 0), SphericalUtil.interpolate(front, up, 1 / 90.0));
-    expectLatLngApproxEquals(
-        LatLng(1, 0), SphericalUtil.interpolate(up, front, 89 / 90.0));
-    expectLatLngApproxEquals(
-        LatLng(89, 0), SphericalUtil.interpolate(front, up, 89 / 90.0));
-    expectLatLngApproxEquals(
-        LatLng(89, 0), SphericalUtil.interpolate(up, front, 1 / 90.0));
+    expectLatLngApproxEquals(LatLng(1, 0), SphericalUtil.interpolate(front, up, 1 / 90.0));
+    expectLatLngApproxEquals(LatLng(1, 0), SphericalUtil.interpolate(up, front, 89 / 90.0));
+    expectLatLngApproxEquals(LatLng(89, 0), SphericalUtil.interpolate(front, up, 89 / 90.0));
+    expectLatLngApproxEquals(LatLng(89, 0), SphericalUtil.interpolate(up, front, 1 / 90.0));
 
     // Between front and down
-    expectLatLngApproxEquals(
-        LatLng(-1, 0), SphericalUtil.interpolate(front, down, 1 / 90.0));
-    expectLatLngApproxEquals(
-        LatLng(-1, 0), SphericalUtil.interpolate(down, front, 89 / 90.0));
-    expectLatLngApproxEquals(
-        LatLng(-89, 0), SphericalUtil.interpolate(front, down, 89 / 90.0));
-    expectLatLngApproxEquals(
-        LatLng(-89, 0), SphericalUtil.interpolate(down, front, 1 / 90.0));
+    expectLatLngApproxEquals(LatLng(-1, 0), SphericalUtil.interpolate(front, down, 1 / 90.0));
+    expectLatLngApproxEquals(LatLng(-1, 0), SphericalUtil.interpolate(down, front, 89 / 90.0));
+    expectLatLngApproxEquals(LatLng(-89, 0), SphericalUtil.interpolate(front, down, 89 / 90.0));
+    expectLatLngApproxEquals(LatLng(-89, 0), SphericalUtil.interpolate(down, front, 1 / 90.0));
 
     // Between left and back
-    expectLatLngApproxEquals(
-        LatLng(0, -91), SphericalUtil.interpolate(left, back, 1 / 90.0));
-    expectLatLngApproxEquals(
-        LatLng(0, -91), SphericalUtil.interpolate(back, left, 89 / 90.0));
-    expectLatLngApproxEquals(
-        LatLng(0, -179), SphericalUtil.interpolate(left, back, 89 / 90.0));
-    expectLatLngApproxEquals(
-        LatLng(0, -179), SphericalUtil.interpolate(back, left, 1 / 90.0));
+    expectLatLngApproxEquals(LatLng(0, -91), SphericalUtil.interpolate(left, back, 1 / 90.0));
+    expectLatLngApproxEquals(LatLng(0, -91), SphericalUtil.interpolate(back, left, 89 / 90.0));
+    expectLatLngApproxEquals(LatLng(0, -179), SphericalUtil.interpolate(left, back, 89 / 90.0));
+    expectLatLngApproxEquals(LatLng(0, -179), SphericalUtil.interpolate(back, left, 1 / 90.0));
 
     // geodesic crosses pole
-    expectLatLngApproxEquals(
-        up, SphericalUtil.interpolate(LatLng(45, 0), LatLng(45, 180), 1 / 2.0));
-    expectLatLngApproxEquals(down,
-        SphericalUtil.interpolate(LatLng(-45, 0), LatLng(-45, 180), 1 / 2.0));
+    expectLatLngApproxEquals(up, SphericalUtil.interpolate(LatLng(45, 0), LatLng(45, 180), 1 / 2.0));
+    expectLatLngApproxEquals(down, SphericalUtil.interpolate(LatLng(-45, 0), LatLng(-45, 180), 1 / 2.0));
 
     // boundary values for fraction, between left and back
     expectLatLngApproxEquals(left, SphericalUtil.interpolate(left, back, 0));
@@ -277,10 +195,8 @@ void main() {
 
     // two nearby points, separated by ~4m, for which the Slerp algorithm is not
     // stable and we have to fall back to linear interpolation.
-    expectLatLngApproxEquals(
-        LatLng(-37.756872, 175.325252),
-        SphericalUtil.interpolate(LatLng(-37.756891, 175.325262),
-            LatLng(-37.756853, 175.325242), 0.5));
+    expectLatLngApproxEquals(LatLng(-37.756872, 175.325252),
+        SphericalUtil.interpolate(LatLng(-37.756891, 175.325262), LatLng(-37.756853, 175.325242), 0.5));
   });
 
   test('testComputeLength', () {
@@ -290,14 +206,10 @@ void main() {
     expect(SphericalUtil.computeLength([LatLng(0, 0)]), closeTo(0, 1e-6));
 
     latLngs = [LatLng(0, 0), LatLng(0.1, 0.1)];
-    expect(
-        SphericalUtil.computeLength(latLngs),
-        closeTo(
-            MathUtil.toRadians(0.1) * sqrt(2) * SphericalUtil.earthRadius, 1));
+    expect(SphericalUtil.computeLength(latLngs), closeTo(MathUtil.toRadians(0.1) * sqrt(2) * Earth.radius, 1));
 
     latLngs = [LatLng(0, 0), LatLng(90, 0), LatLng(0, 90)];
-    expect(SphericalUtil.computeLength(latLngs),
-        closeTo(pi * SphericalUtil.earthRadius, 1e-6));
+    expect(SphericalUtil.computeLength(latLngs), closeTo(pi * Earth.radius, 1e-6));
   });
 
   test('testIsCCW', () {
@@ -311,59 +223,30 @@ void main() {
   });
 
   test('testComputeTriangleArea', () {
-    expect(
-        computeTriangleArea(right, up, front),
-        closeTo(SphericalUtil.earthRadius * SphericalUtil.earthRadius * pi / 2,
-            1e-2));
-    expect(
-        computeTriangleArea(front, up, right),
-        closeTo(SphericalUtil.earthRadius * SphericalUtil.earthRadius * pi / 2,
-            1e-2));
+    expect(computeTriangleArea(right, up, front), closeTo(Earth.radius * Earth.radius * pi / 2, 1e-2));
+    expect(computeTriangleArea(front, up, right), closeTo(Earth.radius * Earth.radius * pi / 2, 1e-2));
 
     // computeArea returns area of zero on small polys
     final area = computeTriangleArea(
-        LatLng(0, 0),
-        LatLng(0, MathUtil.toDegrees(1E-6).toDouble()),
-        LatLng(MathUtil.toDegrees(1E-6).toDouble(), 0));
-    const expectedArea =
-        SphericalUtil.earthRadius * SphericalUtil.earthRadius * 1E-12 / 2;
+        LatLng(0, 0), LatLng(0, MathUtil.toDegrees(1E-6).toDouble()), LatLng(MathUtil.toDegrees(1E-6).toDouble(), 0));
+    final expectedArea = Earth.radius * Earth.radius * 1E-12 / 2;
 
     expect(area, closeTo(expectedArea, 1e-8));
   });
 
   test('testComputeSignedTriangleArea', () {
-    expect(
-        computeSignedTriangleArea(
-            LatLng(0, 0), LatLng(0, 0.1), LatLng(0.1, 0.1)),
-        closeTo(
-            SphericalUtil.earthRadius *
-                SphericalUtil.earthRadius *
-                MathUtil.toRadians(0.1) *
-                MathUtil.toRadians(0.1) /
-                2,
-            1e2));
+    expect(computeSignedTriangleArea(LatLng(0, 0), LatLng(0, 0.1), LatLng(0.1, 0.1)),
+        closeTo(Earth.radius * Earth.radius * MathUtil.toRadians(0.1) * MathUtil.toRadians(0.1) / 2, 1e2));
 
-    expect(
-        computeSignedTriangleArea(right, up, front),
-        closeTo(SphericalUtil.earthRadius * SphericalUtil.earthRadius * pi / 2,
-            1e-2));
+    expect(computeSignedTriangleArea(right, up, front), closeTo(Earth.radius * Earth.radius * pi / 2, 1e-2));
 
-    expect(
-        computeSignedTriangleArea(front, up, right),
-        closeTo(SphericalUtil.earthRadius * SphericalUtil.earthRadius * -pi / 2,
-            1e-2));
+    expect(computeSignedTriangleArea(front, up, right), closeTo(Earth.radius * Earth.radius * -pi / 2, 1e-2));
   });
 
   test('testComputeArea', () {
-    expect(
-        SphericalUtil.computeArea([right, up, front, down, right]),
-        closeTo(
-            pi * SphericalUtil.earthRadius * SphericalUtil.earthRadius, .4));
+    expect(SphericalUtil.computeArea([right, up, front, down, right]), closeTo(pi * Earth.radius * Earth.radius, .4));
 
-    expect(
-        SphericalUtil.computeArea([right, down, front, up, right]),
-        closeTo(
-            pi * SphericalUtil.earthRadius * SphericalUtil.earthRadius, .4));
+    expect(SphericalUtil.computeArea([right, down, front, up, right]), closeTo(pi * Earth.radius * Earth.radius, .4));
 
     final p1 = LatLng(45.153474463955796, 39.33852195739747);
     final p2 = LatLng(45.153474463955796, 39.33972358703614);
@@ -377,16 +260,12 @@ void main() {
     final path = [right, up, front, down, right];
     final pathReversed = [right, down, front, up, right];
 
-    expect(-SphericalUtil.computeSignedArea(path),
-        SphericalUtil.computeSignedArea(pathReversed));
+    expect(-SphericalUtil.computeSignedArea(path), SphericalUtil.computeSignedArea(pathReversed));
   });
 }
 
-num computeSignedTriangleArea(LatLng a, LatLng b, LatLng c) =>
-    SphericalUtil.computeSignedArea([a, b, c]);
+num computeSignedTriangleArea(LatLng a, LatLng b, LatLng c) => SphericalUtil.computeSignedArea([a, b, c]);
 
-num computeTriangleArea(LatLng a, LatLng b, LatLng c) =>
-    computeSignedTriangleArea(a, b, c).abs();
+num computeTriangleArea(LatLng a, LatLng b, LatLng c) => computeSignedTriangleArea(a, b, c).abs();
 
-int isCCW(LatLng a, LatLng b, LatLng c) =>
-    computeSignedTriangleArea(a, b, c) > 0 ? 1 : -1;
+int isCCW(LatLng a, LatLng b, LatLng c) => computeSignedTriangleArea(a, b, c) > 0 ? 1 : -1;

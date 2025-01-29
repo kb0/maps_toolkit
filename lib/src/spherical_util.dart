@@ -1,12 +1,11 @@
 import 'dart:math';
 
+import 'earth.dart';
 import 'latlng.dart';
 import 'math_util.dart';
 
 /// Port of SphericalUtil from android-maps-utils (https://github.com/googlemaps/android-maps-utils)
 class SphericalUtil {
-  static const num earthRadius = 6371009.0;
-
   /// Returns the heading from one LatLng to another LatLng. Headings are
   /// expressed in degrees clockwise from North within the range [-180,180).
   /// @return The heading in degrees clockwise from north.
@@ -29,7 +28,7 @@ class SphericalUtil {
   /// @param distance The distance to travel.
   /// @param heading  The heading in degrees clockwise from north.
   static LatLng computeOffset(LatLng from, num distance, num heading) {
-    distance /= earthRadius;
+    distance /= Earth.radius;
     heading = MathUtil.toRadians(heading);
     // http://williams.best.vwh.net/avform.htm#LL
     final fromLat = MathUtil.toRadians(from.latitude);
@@ -56,7 +55,7 @@ class SphericalUtil {
   /// @param heading  The heading in degrees clockwise from north.
   static LatLng? computeOffsetOrigin(LatLng to, num distance, num heading) {
     heading = MathUtil.toRadians(heading);
-    distance /= earthRadius;
+    distance /= Earth.radius;
     // http://lists.maptools.org/pipermail/proj/2008-October/003939.html
     final n1 = cos(distance);
     final n2 = sin(distance) * cos(heading);
@@ -142,7 +141,7 @@ class SphericalUtil {
 
   /// Returns the distance between two LatLngs, in meters.
   static num computeDistanceBetween(LatLng from, LatLng to) =>
-      computeAngleBetween(from, to) * earthRadius;
+      computeAngleBetween(from, to) * Earth.radius;
 
   /// Returns the length of the given path, in meters, on Earth.
   static num computeLength(List<LatLng> path) {
@@ -164,7 +163,7 @@ class SphericalUtil {
       return value;
     });
 
-    return length * earthRadius;
+    return length * Earth.radius;
   }
 
   /// Returns the area of a closed path on Earth.
@@ -178,7 +177,7 @@ class SphericalUtil {
   /// @param path A closed path.
   /// @return The loop's area in square meters.
   static num computeSignedArea(List<LatLng> path) =>
-      _computeSignedArea(path, earthRadius);
+      _computeSignedArea(path, Earth.radius);
 
   /// Returns the signed area of a closed path on a sphere of given radius.
   /// The computed area uses the same units as the radius squared.

@@ -1,17 +1,15 @@
 import 'dart:collection';
 import 'dart:math';
 
-import 'package:maps_toolkit/src/spherical_util.dart';
-
+import 'earth.dart';
 import 'latlng.dart';
 import 'math_util.dart';
+import 'spherical_util.dart';
 
 /// Port of PolyUtil from android-maps-utils (https://github.com/googlemaps/android-maps-utils)
 class PolygonUtil {
-  static const num earthRadius = 6371009.0;
-
   /// Returns tan(latitude-at-lng3) on the great circle (lat1, lng1) to
-  /// (lat2, lng2). lng1==0.
+  /// (lat2, lng2). lng1==0.plu
   /// See http://williams.best.vwh.net/avform.htm .
   static num _tanLatGC(num lat1, num lat2, num lng2, num lng3) =>
       (tan(lat1) * sin(lng2 - lng3) + tan(lat2) * sin(lng3)) / sin(lng2);
@@ -182,7 +180,7 @@ class PolygonUtil {
     if (poly.isEmpty) {
       return -1;
     }
-    final tolerance = toleranceEarth / earthRadius;
+    final tolerance = toleranceEarth / Earth.radius;
     final havTolerance = MathUtil.hav(tolerance);
     final lat3 = MathUtil.toRadians(point.latitude);
     final lng3 = MathUtil.toRadians(point.longitude);

@@ -17,8 +17,7 @@ void assertEndPoints(List<LatLng> line, List<LatLng> simplifiedLine) {
 ///
 /// @param line original line
 /// @param simplifiedLine simplified line
-void assertSimplifiedPointsFromLine(
-    List<LatLng> line, List<LatLng> simplifiedLine) {
+void assertSimplifiedPointsFromLine(List<LatLng> line, List<LatLng> simplifiedLine) {
   expect(simplifiedLine.any((point) => line.contains(point)), equals(true));
 }
 
@@ -32,14 +31,10 @@ void assertLineLength(List<LatLng> line, List<LatLng> simplifiedLine) {
   if (line.length == simplifiedLine.length) {
     // If no points were eliminated, then the length of both lines should be the
     // same
-    expect(
-        SphericalUtil.computeLength(simplifiedLine) -
-            SphericalUtil.computeLength(line),
-        closeTo(0.0, 0.0));
+    expect(SphericalUtil.computeLength(simplifiedLine) - SphericalUtil.computeLength(line), closeTo(0.0, 0.0));
   } else {
     expect(simplifiedLine.length, lessThan(line.length));
-    expect(SphericalUtil.computeLength(simplifiedLine),
-        lessThan(SphericalUtil.computeLength(line)));
+    expect(SphericalUtil.computeLength(simplifiedLine), lessThan(SphericalUtil.computeLength(line)));
   }
 }
 
@@ -64,8 +59,7 @@ void containsCase(List<LatLng> poly, List<LatLng> yes, List<LatLng> no) {
   }
 }
 
-void onEdgeCaseWithGeodesic(
-    bool geodesic, List<LatLng> poly, List<LatLng> yes, List<LatLng> no) {
+void onEdgeCaseWithGeodesic(bool geodesic, List<LatLng> poly, List<LatLng> yes, List<LatLng> no) {
   for (final point in yes) {
     expect(PolygonUtil.isLocationOnEdge(point, poly, geodesic), equals(true));
     expect(PolygonUtil.isLocationOnPath(point, poly, geodesic), equals(true));
@@ -81,8 +75,7 @@ void onEdgeCase(List<LatLng> poly, List<LatLng> yes, List<LatLng> no) {
   onEdgeCaseWithGeodesic(false, poly, yes, no);
 }
 
-void locationIndexCaseWithGeodesic(
-    bool geodesic, List<LatLng> poly, LatLng point, int idx) {
+void locationIndexCaseWithGeodesic(bool geodesic, List<LatLng> poly, LatLng point, int idx) {
   expect(PolygonUtil.locationIndexOnPath(point, poly, geodesic), idx);
 }
 
@@ -93,35 +86,24 @@ void locationIndexCase(List<LatLng> poly, LatLng point, int idx) {
 
 void main() {
   // The vertices of an octahedron, for testing
-  final polygon = [
-    LatLng(10, 10),
-    LatLng(10, 20),
-    LatLng(20, 20),
-    LatLng(20, 10),
-    LatLng(10, 10)
-  ];
+  final polygon = [LatLng(10, 10), LatLng(10, 20), LatLng(20, 20), LatLng(20, 10), LatLng(10, 10)];
 
-  const encodedPolyline =
-      '_cqeFf~cjVf@p@fA}AtAoB`ArAx@hA`GbIvDiFv@gAh@t@X\\|@z@`@Z\\Xf@Vf@VpA\\tATJ@NBBkC';
+  const encodedPolyline = '_cqeFf~cjVf@p@fA}AtAoB`ArAx@hA`GbIvDiFv@gAh@t@X\\|@z@`@Z\\Xf@Vf@VpA\\tATJ@NBBkC';
 
   setUp(() {});
 
   test('containsLocation for empty polygon', () {
-    expect(
-        PolygonUtil.containsLocation(LatLng(1, 1), [], false), equals(false));
+    expect(PolygonUtil.containsLocation(LatLng(1, 1), [], false), equals(false));
   });
 
   test('containsLocation without point', () {
-    expect(PolygonUtil.containsLocation(LatLng(99, 99), polygon, true),
-        equals(false));
+    expect(PolygonUtil.containsLocation(LatLng(99, 99), polygon, true), equals(false));
   });
 
   test('containsLocation with point', () {
-    expect(PolygonUtil.containsLocation(LatLng(10, 10), polygon, true),
-        equals(true));
+    expect(PolygonUtil.containsLocation(LatLng(10, 10), polygon, true), equals(true));
 
-    expect(PolygonUtil.containsLocation(LatLng(15, 15), polygon, true),
-        equals(true));
+    expect(PolygonUtil.containsLocation(LatLng(15, 15), polygon, true), equals(true));
   });
 
   test('encode/decode polygon', () {
@@ -225,35 +207,20 @@ void main() {
 
     // Endpoints
     onEdgeCase(makeList([1, 2]), makeList([1, 2]), makeList([3, 5]));
-    onEdgeCase(
-        makeList([1, 2, 3, 5]), makeList([1, 2, 3, 5]), makeList([0, 0]));
+    onEdgeCase(makeList([1, 2, 3, 5]), makeList([1, 2, 3, 5]), makeList([0, 0]));
 
     // On equator.
-    onEdgeCase(
-        makeList([0, 90, 0, 180]),
-        makeList(
-            [0, 90 - small, 0, 90 + small, 0 - small, 90, 0, 135, small, 135]),
+    onEdgeCase(makeList([0, 90, 0, 180]), makeList([0, 90 - small, 0, 90 + small, 0 - small, 90, 0, 135, small, 135]),
         makeList([0, 90 - big, 0, 0, 0, -90, big, 135]));
 
     // Ends on same latitude.
     onEdgeCase(
         makeList([-45, -180, -45, -small]),
-        makeList([
-          -45,
-          180 + small,
-          -45,
-          180 - small,
-          -45 - small,
-          180 - small,
-          -45,
-          0
-        ]),
+        makeList([-45, 180 + small, -45, 180 - small, -45 - small, 180 - small, -45, 0]),
         makeList([-45, big, -45, 180 - big, -45 + big, -90, -45, 90]));
 
     // Meridian.
-    onEdgeCase(
-        makeList([-10, 30, 45, 30]),
-        makeList([10, 30 - small, 20, 30 + small, -10 - small, 30 + small]),
+    onEdgeCase(makeList([-10, 30, 45, 30]), makeList([10, 30 - small, 20, 30 + small, -10 - small, 30 + small]),
         makeList([-10 - big, 30, 10, -150, 0, 30 - big]));
 
     // Slanted close to meridian, close to North pole.
@@ -263,51 +230,24 @@ void main() {
         makeList([-big, 0, 90 - big, 180, 10, big]));
 
     // Arc > 120 deg.
-    onEdgeCase(
-        makeList([0, 0, 0, 179.999]),
-        makeList([0, 90, 0, small, 0, 179, small, 90]),
+    onEdgeCase(makeList([0, 0, 0, 179.999]), makeList([0, 90, 0, small, 0, 179, small, 90]),
         makeList([0, -90, small, -100, 0, 180, 0, -big, 90, 0, -90, 180]));
 
     onEdgeCase(
         makeList([10, 5, 30, 15]),
-        makeList([
-          10 + 2 * big,
-          5 + big,
-          10 + big,
-          5 + big / 2,
-          30 - 2 * big,
-          15 - big
-        ]),
-        makeList([
-          20,
-          10,
-          10 - big,
-          5 - big / 2,
-          30 + 2 * big,
-          15 + big,
-          10 + 2 * big,
-          5,
-          10,
-          5 + big
-        ]));
+        makeList([10 + 2 * big, 5 + big, 10 + big, 5 + big / 2, 30 - 2 * big, 15 - big]),
+        makeList([20, 10, 10 - big, 5 - big / 2, 30 + 2 * big, 15 + big, 10 + 2 * big, 5, 10, 5 + big]));
 
     onEdgeCase(
         makeList([90 - small, 0, 0, 180 - small / 2]),
-        makeList(
-            [big, -180 + small / 2, big, 180 - small / 4, big, 180 - small]),
+        makeList([big, -180 + small / 2, big, 180 - small / 4, big, 180 - small]),
         makeList([-big, -180 + small / 2, -big, 180, -big, 180 - small]));
 
     // Reaching close to North pole.
-    onEdgeCaseWithGeodesic(
-        true,
-        makeList([80, 0, 80, 180 - small]),
-        makeList([90 - small, -90, 90, -135, 80 - small, 0, 80 + small, 0]),
-        makeList([80, 90, 79, big]));
+    onEdgeCaseWithGeodesic(true, makeList([80, 0, 80, 180 - small]),
+        makeList([90 - small, -90, 90, -135, 80 - small, 0, 80 + small, 0]), makeList([80, 90, 79, big]));
 
-    onEdgeCaseWithGeodesic(
-        false,
-        makeList([80, 0, 80, 180 - small]),
-        makeList([80 - small, 0, 80 + small, 0, 80, 90]),
+    onEdgeCaseWithGeodesic(false, makeList([80, 0, 80, 180 - small]), makeList([80 - small, 0, 80 + small, 0, 80, 90]),
         makeList([79, big, 90 - small, -90, 90, -135]));
   });
 
@@ -340,26 +280,22 @@ void main() {
     containsCase(makeList([1, 2]), makeList([1, 2]), makeList([0, 0]));
 
     // Two points.
-    containsCase(makeList([1, 2, 3, 5]), makeList([1, 2, 3, 5]),
-        makeList([0, 0, 40, 4]));
+    containsCase(makeList([1, 2, 3, 5]), makeList([1, 2, 3, 5]), makeList([0, 0, 40, 4]));
 
     // Some arbitrary triangle.
-    containsCase(
-        makeList([0.0, 0.0, 10.0, 12.0, 20.0, 5.0]),
-        makeList([10.0, 12.0, 10, 11, 19, 5]),
+    containsCase(makeList([0.0, 0.0, 10.0, 12.0, 20.0, 5.0]), makeList([10.0, 12.0, 10, 11, 19, 5]),
         makeList([0, 1, 11, 12, 30, 5, 0, -180, 0, 90]));
 
     // Around North Pole.
-    containsCase(makeList([89, 0, 89, 120, 89, -120]),
-        makeList([90, 0, 90, 180, 90, -90]), makeList([-90, 0, 0, 0]));
+    containsCase(makeList([89, 0, 89, 120, 89, -120]), makeList([90, 0, 90, 180, 90, -90]), makeList([-90, 0, 0, 0]));
 
     // Around South Pole.
-    containsCase(makeList([-89, 0, -89, 120, -89, -120]),
-        makeList([90, 0, 90, 180, 90, -90, 0, 0]), makeList([-90, 0, -90, 90]));
+    containsCase(makeList([-89, 0, -89, 120, -89, -120]), makeList([90, 0, 90, 180, 90, -90, 0, 0]),
+        makeList([-90, 0, -90, 90]));
 
     // Over/under segment on meridian and equator.
-    containsCase(makeList([5, 10, 10, 10, 0, 20, 0, -10]),
-        makeList([2.5, 10, 1, 0]), makeList([15, 10, 0, -15, 0, 25, -1, 0]));
+    containsCase(
+        makeList([5, 10, 10, 10, 0, 20, 0, -10]), makeList([2.5, 10, 1, 0]), makeList([15, 10, 0, -15, 0, 25, -1, 0]));
   });
 
   test('contains issue-4-1', () {
@@ -462,25 +398,13 @@ void main() {
       25.3917995
     ]);
 
-    expect(
-        PolygonUtil.containsLocation(
-            LatLng(55.455251, 25.392898), polygon, true),
-        equals(true));
+    expect(PolygonUtil.containsLocation(LatLng(55.455251, 25.392898), polygon, true), equals(true));
 
-    expect(
-        PolygonUtil.containsLocation(
-            LatLng(55.454473, 25.394104), polygon, true),
-        equals(true));
+    expect(PolygonUtil.containsLocation(LatLng(55.454473, 25.394104), polygon, true), equals(true));
 
-    expect(
-        PolygonUtil.containsLocation(
-            LatLng(25.392898, 55.455251), polygon, true),
-        equals(false));
+    expect(PolygonUtil.containsLocation(LatLng(25.392898, 55.455251), polygon, true), equals(false));
 
-    expect(
-        PolygonUtil.containsLocation(
-            LatLng(25.394104, 55.454473), polygon, true),
-        equals(false));
+    expect(PolygonUtil.containsLocation(LatLng(25.394104, 55.454473), polygon, true), equals(false));
   });
 
   test('contains issue-4-2', () {
@@ -585,24 +509,12 @@ void main() {
       55.4695522
     ]);
 
-    expect(
-        PolygonUtil.containsLocation(
-            LatLng(55.455251, 25.392898), polygon, true),
-        equals(false));
+    expect(PolygonUtil.containsLocation(LatLng(55.455251, 25.392898), polygon, true), equals(false));
 
-    expect(
-        PolygonUtil.containsLocation(
-            LatLng(25.392898, 55.455251), polygon, true),
-        equals(true));
+    expect(PolygonUtil.containsLocation(LatLng(25.392898, 55.455251), polygon, true), equals(true));
 
-    expect(
-        PolygonUtil.containsLocation(
-            LatLng(55.454473, 25.394104), polygon, true),
-        equals(false));
+    expect(PolygonUtil.containsLocation(LatLng(55.454473, 25.394104), polygon, true), equals(false));
 
-    expect(
-        PolygonUtil.containsLocation(
-            LatLng(25.394104, 55.454473), polygon, true),
-        equals(true));
+    expect(PolygonUtil.containsLocation(LatLng(25.394104, 55.454473), polygon, true), equals(true));
   });
 }

@@ -2,10 +2,22 @@ class LatLng {
   final double latitude;
   final double longitude;
 
-  LatLng(this.latitude, this.longitude);
+  const LatLng(this.latitude, this.longitude);
 
-  factory LatLng.fromMap(Map<String, double> dataMap) =>
-      LatLng(dataMap['latitude']!, dataMap['longitude']!);
+  factory LatLng.fromMap(Map<String, dynamic> dataMap) =>
+      LatLng(dataMap['latitude'], dataMap['longitude']);
+
+  Map<String, dynamic> toJson() => {
+    'latitude': latitude,
+    'longitude': longitude
+  };
+
+  factory LatLng.fromCoords(Map<String, dynamic> json)  =>
+      LatLng(json['coordinates'][1], json['coordinates'][0]);
+
+  Map<String, dynamic> toCoordsJson() => {
+    'coordinates': [longitude, latitude]
+  };
 
   @override
   // ignore: type_annotate_public_apis
