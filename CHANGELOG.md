@@ -1,3 +1,8 @@
+## 3.1.0
+
+* Switch default earth radius from mean radius (WGS-84 ellipsoid) into equatorial radius (WGS-84 ellipsoid),
+  for compatibility it's possible to setup mean radius `Earth.radius = Earth.meanRadius`
+
 ## 3.0.0
 
 * Update Dart DSK version to 3.0.0+
